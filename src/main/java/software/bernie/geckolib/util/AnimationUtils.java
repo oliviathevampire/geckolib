@@ -18,6 +18,7 @@ import software.bernie.geckolib.animation.keyframe.AnimationPoint;
 import software.bernie.geckolib.animation.model.AnimatedEntityModel;
 import software.bernie.geckolib.easing.EasingManager;
 import software.bernie.geckolib.easing.EasingType;
+import software.bernie.geckolib.render.IModelRenderer;
 
 import java.util.function.Function;
 
@@ -95,7 +96,20 @@ public class AnimationUtils
 		EntityRenderer<T> entityRenderer = getRenderer(entity);
 		if (entityRenderer instanceof IEntityRenderer)
 		{
-			LivingRenderer renderer = (LivingRenderer) entityRenderer;
+			IEntityRenderer renderer = (IEntityRenderer) entityRenderer;
+			EntityModel entityModel = renderer.getEntityModel();
+			if (entityModel instanceof AnimatedEntityModel)
+			{
+				return (AnimatedEntityModel) entityModel;
+			}
+			else {
+				GeckoLib.LOGGER.error("Model for " + entity.getName() + " is not an AnimatedEntityModel. Please inherit the proper class.");
+				return null;
+			}
+		}
+		else if(entityRenderer instanceof IModelRenderer)
+		{
+			IModelRenderer renderer = (IModelRenderer) entityRenderer;
 			EntityModel entityModel = renderer.getEntityModel();
 			if (entityModel instanceof AnimatedEntityModel)
 			{
