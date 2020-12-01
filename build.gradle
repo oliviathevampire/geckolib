@@ -23,6 +23,7 @@ group = project.maven_group
 
 
 minecraft {
+    accessWidener = file("src/main/resources/geckolib.ac")
 }
 
 repositories {

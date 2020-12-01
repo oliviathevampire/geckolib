@@ -67,24 +67,24 @@ public class RegistryUtils {
         return blockEntityType;
     }
 
-    public static Block registerNetherStem(Identifier name, MaterialColor materialColor) {
+    public static Block registerNetherStem(Identifier name, MapColor materialColor) {
         return register(new PillarBlock(AbstractBlock.Settings.of(Material.WOOD, (blockState) -> materialColor)
                 .strength(1.0F).sounds(BlockSoundGroup.NETHER_STEM)), name);
     }
 
-    public static Block registerLog(Identifier name, MaterialColor materialColor, MaterialColor materialColor2) {
+    public static Block registerLog(Identifier name, MapColor materialColor, MapColor materialColor2) {
         return register(new PillarBlock(AbstractBlock.Settings.of(Material.WOOD, (blockState) ->
                 blockState.get(PillarBlock.AXIS) == Direction.Axis.Y ? materialColor : materialColor2)
                 .strength(2.0F).sounds(BlockSoundGroup.WOOD)), name);
     }
 
-    public static Block registerNetherStem(String name, MaterialColor materialColor) {
+    public static Block registerNetherStem(String name, MapColor materialColor) {
         return register(new PillarBlock(AbstractBlock.Settings.of(Material.WOOD, (blockState) -> materialColor)
                         .strength(1.0F).sounds(BlockSoundGroup.NETHER_STEM)), new Identifier(GeckoLib.ModID, name),
                 ItemGroup.BUILDING_BLOCKS);
     }
 
-    public static Block registerLog(String name, MaterialColor materialColor, MaterialColor materialColor2) {
+    public static Block registerLog(String name, MapColor materialColor, MapColor materialColor2) {
         return register(new PillarBlock(AbstractBlock.Settings.of(Material.WOOD, (blockState) ->
                 blockState.get(PillarBlock.AXIS) == Direction.Axis.Y ? materialColor : materialColor2)
                 .strength(2.0F).sounds(BlockSoundGroup.WOOD)), new Identifier(GeckoLib.ModID, name));

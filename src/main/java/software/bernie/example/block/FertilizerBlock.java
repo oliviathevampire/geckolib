@@ -4,7 +4,8 @@ import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.state.StateManager;
-import net.minecraft.world.BlockView;
+import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.example.registry.TileRegistry;
 
 public class FertilizerBlock extends FacingBlock implements BlockEntityProvider {
@@ -28,7 +29,7 @@ public class FertilizerBlock extends FacingBlock implements BlockEntityProvider 
     }
 
     @Override
-    public BlockEntity createBlockEntity(BlockView world) {
-        return TileRegistry.FERTILIZER.instantiate();
+    public @Nullable BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return TileRegistry.FERTILIZER.instantiate(pos, state);
     }
 }

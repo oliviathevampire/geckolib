@@ -22,12 +22,13 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import software.bernie.geckolib3.ArmorRenderingRegistry;
 import software.bernie.geckolib3.ArmorRenderingRegistryImpl;
 
 import java.util.Map;
 import java.util.Objects;
 
-@Mixin({ArmorFeatureRenderer.class})
+@Mixin(ArmorFeatureRenderer.class)
 @Environment(EnvType.CLIENT)
 public abstract class MixinArmorFeatureRenderer extends FeatureRenderer {
     @Shadow
@@ -91,7 +92,8 @@ public abstract class MixinArmorFeatureRenderer extends FeatureRenderer {
             locals = LocalCapture.CAPTURE_FAILHARD
     )
     private void getArmorTexture(ArmorItem armorItem, boolean secondLayer, String suffix, CallbackInfoReturnable<Identifier> cir, String vanillaIdentifier) {
-        String texture = ArmorRenderingRegistryImpl.getArmorTexture(this.gl_storedEntity, this.gl_storedEntity.getEquippedStack(this.gl_storedSlot), this.gl_storedSlot, secondLayer, suffix, new Identifier(vanillaIdentifier)).toString();
+        String texture = ArmorRenderingRegistry.getArmorTexture(this.gl_storedEntity, this.gl_storedEntity.getEquippedStack(this.gl_storedSlot), this.gl_storedSlot, secondLayer, suffix, new Identifier(vanillaIdentifier)).toString();
+
         if (!Objects.equals(texture, vanillaIdentifier)) {
             cir.setReturnValue(ARMOR_TEXTURE_CACHE.computeIfAbsent(texture, Identifier::new));
         }

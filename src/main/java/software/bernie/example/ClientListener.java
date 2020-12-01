@@ -13,6 +13,7 @@ import net.fabricmc.loader.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.entity.EntityType;
 import software.bernie.example.client.renderer.armor.PotatoArmorRenderer;
 import software.bernie.example.client.renderer.entity.BikeGeoRenderer;
@@ -39,16 +40,16 @@ public class ClientListener implements ClientModInitializer
 	{
 		if (FabricLoader.INSTANCE.isDevelopmentEnvironment())
 		{
-			EntityRendererRegistry.INSTANCE.register(EntityRegistry.GEO_EXAMPLE_ENTITY, (entityRenderDispatcher, context) -> new ExampleGeoRenderer(entityRenderDispatcher));
-			EntityRendererRegistry.INSTANCE.register(EntityRegistry.BIKE_ENTITY, (entityRenderDispatcher, context) -> new BikeGeoRenderer(entityRenderDispatcher));
+			EntityRendererRegistry.INSTANCE.register(EntityRegistry.GEO_EXAMPLE_ENTITY, ExampleGeoRenderer::new);
+			EntityRendererRegistry.INSTANCE.register(EntityRegistry.BIKE_ENTITY, BikeGeoRenderer::new);
 			GeoItemRenderer.registerItemRenderer(ItemRegistry.JACK_IN_THE_BOX, new JackInTheBoxRenderer());
-			GeoArmorRenderer.registerArmorRenderer(PotatoArmorItem.class, new PotatoArmorRenderer());
+			GeoArmorRenderer.registerArmorRenderer(PotatoArmorItem.class, new PotatoArmorRenderer(null));
 			BlockEntityRendererRegistry.INSTANCE.register(TileRegistry.BOTARIUM_TILE, BotariumTileRenderer::new);
 			BlockEntityRendererRegistry.INSTANCE.register(TileRegistry.FERTILIZER, FertilizerTileRenderer::new);
 
-			EntityRenderDispatcher renderManager = MinecraftClient.getInstance().getEntityRenderDispatcher();
+			EntityRendererFactory.Context renderManager = MinecraftClient.getInstance().getEntityRenderDispatcher().;
 			ReplacedCreeperRenderer creeperRenderer = new ReplacedCreeperRenderer(renderManager);
-			EntityRendererRegistry.INSTANCE.register(EntityType.CREEPER, (entityRenderDispatcher, context) -> creeperRenderer);
+			EntityRendererRegistry.INSTANCE.register(EntityType.CREEPER, ctx -> creeperRenderer);
 			GeoReplacedEntityRenderer.registerReplacedEntity(ReplacedCreeperEntity.class, creeperRenderer);
 
 			BlockRenderLayerMapImpl.INSTANCE.putBlock(BlockRegistry.BOTARIUM_BLOCK, RenderLayer.getCutout());

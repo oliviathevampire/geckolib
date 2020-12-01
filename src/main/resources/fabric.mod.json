@@ -27,6 +27,7 @@
   "mixins": [
     "fabric.mixins.json"
   ],
+  "accessWidener": "geckolib.ac",
 
   "depends": {
     "fabricloader": ">=0.8.7",

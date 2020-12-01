@@ -3,7 +3,7 @@ package software.bernie.example.client.renderer.entity;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import software.bernie.example.client.model.entity.BikeModel;
@@ -12,9 +12,9 @@ import software.bernie.geckolib3.renderer.geo.GeoEntityRenderer;
 
 public class BikeGeoRenderer extends GeoEntityRenderer<BikeEntity>
 {
-	public BikeGeoRenderer(EntityRenderDispatcher renderManager)
+	public BikeGeoRenderer(EntityRendererFactory.Context context)
 	{
-		super(renderManager, new BikeModel());
+		super(context, new BikeModel());
 	}
 
 	@Override

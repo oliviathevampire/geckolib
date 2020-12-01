@@ -8,12 +8,12 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.entity.BlockEntityRenderDispatcher;
 import net.minecraft.client.render.block.entity.BlockEntityRenderer;
+import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3f;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
@@ -21,12 +21,12 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 import java.awt.*;
 
-public abstract class GeoBlockRenderer<T extends BlockEntity & IAnimatable> extends BlockEntityRenderer implements IGeoRenderer<T> {
+public abstract class GeoBlockRenderer<T extends BlockEntity & IAnimatable> implements IGeoRenderer<T>, BlockEntityRenderer<T> {
     static {
         AnimationController.addModelFetcher((IAnimatable object) -> {
             if (object instanceof BlockEntity) {
                 BlockEntity tile = (BlockEntity) object;
-                BlockEntityRenderer<BlockEntity> renderer = BlockEntityRenderDispatcher.INSTANCE.get(tile);
+                BlockEntityRenderer<BlockEntity> renderer = MinecraftClient.getInstance().method_31975().get(tile);
                 if (renderer instanceof GeoBlockRenderer)
                 {
                     return ((GeoBlockRenderer<?>) renderer).getGeoModelProvider();
@@ -38,8 +38,7 @@ public abstract class GeoBlockRenderer<T extends BlockEntity & IAnimatable> exte
 
     private final AnimatedGeoModel<T> modelProvider;
 
-    public GeoBlockRenderer(BlockEntityRenderDispatcher rendererDispatcherIn, AnimatedGeoModel<T> modelProvider) {
-        super(rendererDispatcherIn);
+    public GeoBlockRenderer(BlockEntityRendererFactory context, AnimatedGeoModel<T> modelProvider) {
         this.modelProvider = modelProvider;
     }
 
@@ -72,22 +71,22 @@ public abstract class GeoBlockRenderer<T extends BlockEntity & IAnimatable> exte
     protected void rotateBlock(Direction facing, MatrixStack stack) {
         switch (facing) {
             case SOUTH:
-                stack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(180));
+                stack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180));
                 break;
             case WEST:
-                stack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(90));
+                stack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(90));
                 break;
             case NORTH:
-                stack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(0));
+                stack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(0));
                 break;
             case EAST:
-                stack.multiply(Vector3f.POSITIVE_Y.getDegreesQuaternion(270));
+                stack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(270));
                 break;
             case UP:
-                stack.multiply(Vector3f.POSITIVE_X.getDegreesQuaternion(90));
+                stack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(90));
                 break;
             case DOWN:
-                stack.multiply(Vector3f.NEGATIVE_X.getDegreesQuaternion(90));
+                stack.multiply(Vec3f.NEGATIVE_X.getDegreesQuaternion(90));
                 break;
         }
     }

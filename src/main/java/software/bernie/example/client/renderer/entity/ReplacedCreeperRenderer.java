@@ -1,6 +1,6 @@
 package software.bernie.example.client.renderer.entity;
 
-import net.minecraft.client.render.entity.EntityRenderDispatcher;
+import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.CreeperEntity;
@@ -11,9 +11,9 @@ import software.bernie.geckolib3.renderer.geo.GeoReplacedEntityRenderer;
 
 public class ReplacedCreeperRenderer extends GeoReplacedEntityRenderer<ReplacedCreeperEntity> {
 
-	public ReplacedCreeperRenderer(EntityRenderDispatcher renderManager)
+	public ReplacedCreeperRenderer(EntityRendererFactory.Context context)
 	{
-		super(renderManager, new ReplacedCreeperModel(), new ReplacedCreeperEntity());
+		super(context, new ReplacedCreeperModel(), new ReplacedCreeperEntity());
 	}
 
 	@Override

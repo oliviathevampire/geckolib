@@ -1,0 +1,4 @@
+accessWidener v1 named
+extendable method net/minecraft/client/render/block/entity/BlockEntityRenderDispatcher get (Lnet/minecraft/block/entity/BlockEntity;)Lnet/minecraft/client/render/block/entity/BlockEntityRenderer;
+accessible class net/minecraft/block/entity/BlockEntityType$BlockEntityFactory
+extendable class net/minecraft/block/entity/BlockEntityType$BlockEntityFactory

@@ -1,16 +1,37 @@
 package software.bernie.geckolib3;
 
-import net.fabricmc.fabric.api.client.rendering.v1.ArmorRenderingRegistry;
-import net.fabricmc.fabric.impl.client.rendering.ArmorProviderExtensions;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Objects;
+
 public final class ArmorRenderingRegistryImpl {
     private ArmorRenderingRegistryImpl() {
+    }
+
+    public static void registerModel(ArmorRenderingRegistry.ModelProvider provider, Iterable<Item> items) {
+        Objects.requireNonNull(items);
+
+        for (Item item : items) {
+            Objects.requireNonNull(item);
+
+            ((ArmorProviderExtensions) item).fabric_setArmorModelProvider(provider);
+        }
+    }
+
+    public static void registerTexture(ArmorRenderingRegistry.TextureProvider provider, Iterable<Item> items) {
+        Objects.requireNonNull(items);
+
+        for (Item item : items) {
+            Objects.requireNonNull(item);
+
+            ((ArmorProviderExtensions) item).fabric_setArmorTextureProvider(provider);
+        }
     }
 
     public static BipedEntityModel<LivingEntity> getArmorModel(LivingEntity entity, ItemStack stack, EquipmentSlot slot, BipedEntityModel<LivingEntity> defaultModel) {

@@ -4,7 +4,7 @@ import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.client.util.math.Vector3f;
+import net.minecraft.util.math.Vec3f;
 import net.minecraft.client.util.math.Vector4f;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Matrix3f;
@@ -60,7 +60,7 @@ public interface IGeoRenderer<T> {
 		Matrix4f matrix4f = stack.peek().getModel();
 
 		for (GeoQuad quad : cube.quads) {
-			Vector3f normal = quad.normal.copy();
+			Vec3f normal = quad.normal.copy();
 			normal.transform(matrix3f);
 
 			if (normal.getX() < 0) {
